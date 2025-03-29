@@ -53,7 +53,6 @@ Creates solution (a video and force data on each member and reactions on each su
 
 Example stdin:
 
-
 ```
 $ warren.txt
 $ 9.8
@@ -72,7 +71,3 @@ $ tmp/warren
 **or**
 
 ```$ ./montage.sh```
-
-## Pipeline
-
-![Program Pipeline Diagram](./pipeline.png)

@@ -1,19 +1,21 @@
+#!/bin/bash
+echo "creating a montage of each of the systems"
 read -r -e -p "create new bridges output? (y/n): " create_bridges
 if ! [[ "$create_bridges" == "y" || "$create_bridges" == "Y" || "$create_bridges" == "n" || "$create_bridges" == "N" ]]
 then
-    echo "unrecognized input"
+    echo "error: unrecognized input"
     exit 1
 fi
 read -r -e -p "create new pendulums output? (y/n): " create_pendulums
 if ! [[ "$create_pendulums" == "y" || "$create_pendulums" == "Y" || "$create_pendulums" == "n" || "$create_pendulums" == "N" ]]
 then
-    echo "unrecognized input"
+    echo "error: unrecognized input"
     exit 1
 fi
 read -r -e -p "create new miscellaneous output? (y/n): " create_miscellaneous
 if ! [[ "$create_miscellaneous" == "y" || "$create_miscellaneous" == "Y" || "$create_miscellaneous" == "n" || "$create_miscellaneous" == "N" ]]
 then
-    echo "unrecognized input"
+    echo "error: unrecognized input"
     exit 1
 fi
 mkdir -p tmp/montage
@@ -30,6 +32,7 @@ if [[ "$create_miscellaneous" == "y" || "$create_miscellaneous" == "Y" ]]
 then
     ./miscellaneous.sh
 fi
+echo "overlaying videos, force diagrams and subtitles"
 mkdir -p tmp/montage/bridges/warren
 echo "\
 subtitles=1
@@ -151,6 +154,7 @@ ffmpeg \
     -map "[v]" \
     -y tmp/montage/miscellaneous/cantilever/video.mp4 \
     -loglevel error
+echo "stitching each of the video solutions together"
 ffmpeg \
     -i tmp/montage/bridges/warren/video.mp4 \
     -i tmp/montage/bridges/pratt/video.mp4 \
@@ -169,3 +173,4 @@ ffmpeg \
 rm -rf tmp/montage/bridges
 rm -rf tmp/montage/pendulums
 rm -rf tmp/montage/miscellaneous
+echo "montage files can now be found in tmp/montage/"

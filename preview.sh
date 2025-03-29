@@ -1,11 +1,12 @@
 #!/bin/bash
+echo "creating preview media"
 read -r -e -p "create new montage? (y/n): " create_montage
 if ! [[
     "$create_montage" == "y" || "$create_montage" == "Y" ||
     "$create_montage" == "n" || "$create_montage" == "N"
 ]]
 then
-    echo "unrecognized input"
+    echo "error: unrecognized input"
     exit 1
 fi
 mkdir -p tmp/preview
@@ -36,3 +37,4 @@ cp tmp/preview/fdiagram.mp4 previewfd.mp4
 ffmpeg -sseof -3 -i tmp/preview/fdiagram.mp4 -vsync 0 -q:v 31 -update true -y previewfd.png -loglevel error
 cp tmp/montage/video.mp4 previewmt.mp4
 ffmpeg -sseof -3 -i tmp/montage/video.mp4 -vsync 0 -q:v 31 -update true -y previewmt.png -loglevel error
+echo "preview files can now be found at preview*"
