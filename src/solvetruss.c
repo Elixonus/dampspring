@@ -177,7 +177,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "error: limit: srate argument: %.1le not greater than %.1le\n", srate, -EPSILON);
 		return 1;
 	}
-	dtime = 1.0 / srate;
+	dtime = 1.0 / (srate > EPSILON ? srate : EPSILON);
 	stepf = ((int) round(srate * timef)) - 1;
 	if(stepf < 0)
 	{
